@@ -13,11 +13,8 @@ const fetchData = async (dataUrl) => {
 }
 
 
-
 export function CryptoProvider({children}){
-    const [data, setData] = useState([])
-     //time parse
-     const parseDate = timeFormat("%Y-%m-%d");  
+    const [data, setData] = useState([]) 
     useEffect(() => {
         fetchData(url).then(d => {
             setData(d.Data.Data)
