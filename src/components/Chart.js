@@ -30,6 +30,7 @@ const url = `https://min-api.cryptocompare.com/data/v2/histohour?fsym=BTC&tsym=U
       fetchData(url).then(d => {
         setData(d.Data.Data)
       })
+      console.log(typeof data)
       const svg = select(svgRef.current)
         .append('svg')
         .attr('width', width + margin.left + margin.right)
@@ -85,7 +86,7 @@ const url = `https://min-api.cryptocompare.com/data/v2/histohour?fsym=BTC&tsym=U
 
   }
   useEffect(() => {
-    createGraph
+    createGraph()
   }, [])
   // console.log(data)
 
