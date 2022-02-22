@@ -33,7 +33,7 @@ export function CryptoProvider({children}){
                     
                 }
             })
-            setData(cryptoData)
+            setData(cryptoData.slice(0,50))
             // console.log(cryptoData[0])
         })
         

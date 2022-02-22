@@ -63,7 +63,7 @@ function App() {
                     </div>
                   </div>
               </section>
-              <section>
+              <section className='bg-gray-800 pt-8'>
                 <LineChart />
               </section>
               <div>
