@@ -2,13 +2,13 @@ import React, { useState, useEffect, useRef, useContext } from 'react';
 import { CryptoContext } from '../CryptoContext';
 import { select, bisector, csv, area, curveCardinal, curveMonotoneX, timeParse, scaleTime, scaleLinear, max, min, extent, line, axisBottom, axisLeft, axisTop, axisRight  }  from 'd3';
 
-function LineChart() {
+function LineChart({setCandle}) {
     // const url = 'https://raw.githubusercontent.com/holtzy/data_to_viz/master/Example_dataset/3_TwoNumOrdered_comma.csv'
     const data = useContext(CryptoContext)
     const svgRef = useRef(null)
     // const bisectDate = bisector(d => d.date).left;
 
-    const [candle, setCandle] = useState([])
+   
 
     console.log(data[0])
 
