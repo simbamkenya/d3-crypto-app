@@ -110,9 +110,9 @@ function LineChart({setCandle}) {
             const d0 = data[i - 1];
             const d1 = data[i];
             const currentPoint = correspondingDate - parseDate(d0['date']) > parseDate(d1['date']) - correspondingDate ? d1 : d0;
-            // console.log(i)
+            // // console.log(i)
             // console.log('o', correspondingDate)
-            setCandle(currentPoint)
+            // setCandle(currentPoint)
             
 
             // focus.attr('transform',`translate(${xScale(currentPoint['date'])},     ${yScale(currentPoint['close'])})`);

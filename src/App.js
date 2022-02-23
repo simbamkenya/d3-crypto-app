@@ -5,7 +5,7 @@ import LineChart from './components/LineChart';
 
 
 function App() {
-  const [candle, setCandle] = useState([])
+  const [candle, setCandle] = useState({})
   return (
     <div className='antialiased'>
       <main className='bg-gray-100 h-screen w-full overflow-y-auto'>
@@ -21,7 +21,7 @@ function App() {
                 <div className='p-4 w-full sm:w-1/2 lg:w-1/4 border-b border-solid bg-gray-300 sm:border-r md:border-b-0'>
                   <span className='text-xs font-medium text-gray-500 uppercase'>High</span>
                   <div className='py-4 flex items-center justify-center text-center'>
-                    <span className='text-3xl'>{candle.high.toFixed(2)}</span>
+                    <span className='text-3xl'>{candle.high ? candle.high.toFixed(2) : 'not defined'}</span>
                     {/* <span className='inline-flex items-center bg-green-500 h-6 px-2 rounded text-white text-xs'>+12.0%</span> */}
                   </div>
                 </div>
@@ -29,7 +29,7 @@ function App() {
                 <div className='p-4 w-full sm:w-1/2 lg:w-1/4 border-b border-solid bg-gray-300 sm:border-r md:border-b-0'>
                   <span className='text-xs font-medium text-gray-500 uppercase'>Low</span>
                   <div className='py-4 flex items-center justify-center text-center'>
-                    <span className='text-3xl'>{candle.low.toFixed(2)}</span>
+                    <span className='text-3xl'>{candle.low ? candle.low.toFixed(2) : 'not defined'}</span>
                     {/* <span className='inline-flex items-center bg-green-500 h-6 px-2 rounded text-white text-xs'>+12.0%</span> */}
                   </div>
                 </div>
@@ -37,7 +37,7 @@ function App() {
                 <div className='p-4 w-full sm:w-1/2 lg:w-1/4 border-b border-solid bg-gray-300 sm:border-r md:border-b-0'>
                   <span className='text-xs font-medium text-gray-500 uppercase'>Open</span>
                   <div className='py-4 flex items-center justify-center text-center'>
-                    <span className='text-3xl'>{candle.open.toFixed(2)}</span>
+                    <span className='text-3xl'>{candle.open ? candle.open.toFixed(2) : 'not defined'}</span>
                     {/* <span className='inline-flex items-center bg-green-500 h-6 px-2 rounded text-white text-xs'>+12.0%</span> */}
                   </div>
                 </div>
@@ -45,7 +45,7 @@ function App() {
                 <div className='p-4 w-full sm:w-1/2 lg:w-1/4 border-b border-solid bg-gray-300 md:border-b-0 sm:border-r'>
                     <span className='text-xs font-medium to-gray-500 uppercase'>close</span>
                     <div className='p-4 flex items-center justify-center text-center'>
-                      <span className='mr-4 text-3xl'>{candle.close.toFixed(2)}</span>
+                      <span className='mr-4 text-3xl'>{candle.close ? candle.close.toFixed(2) : 'not defined'}</span>
                       {/* <span className='inline-flex items-center bg-red-500 h-6 px-2 rounded text-white text-xs'>-12</span> */}
                     </div>
                   </div>
@@ -54,7 +54,7 @@ function App() {
                 <LineChart setCandle={setCandle} />
               </section>
               <div>
-                {/* {console.log(candle.high)} */}
+                {console.log(candle.high)}
               </div>
           </section>
         </section>
