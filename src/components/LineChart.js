@@ -53,24 +53,17 @@ function LineChart() {
 
         // console.log(xScale.domain())
 
-        //volume bars series 
+        //volume bars series
     const volData = data.filter(d => d['volume'] !== null && d['volume']   !== 0)
 
     const yMinVol = min(volData, d => Math.min(d['volume']))
     const yMaxVol = max(volData, d => Math.max(d['volume']))
-    
+
     const yVolScale = scaleLinear()
         .domain([yMinVol, yMaxVol])
         .range([height, 0])
 
-    // svg.selectAll()
-    //     .data(volData)
-    //     .enter()
-    //     .append('rect')
-    //     .attr('x', d => xScale(d.date))
-    //     .attr('y', d => yVolScale(d.volume))
-    //     .attr('height', d => height - yVolScale(d.volume))
-    //     .attr('width', 10)
+    // console.log(yVolScale.range())
 
     svg.append('g')
         .attr('transform', `translate(0, ${height})`)
@@ -81,7 +74,7 @@ function LineChart() {
     svg.append('g')
         .call(axisLeft(yScale)).attr('stroke', 'white')
         .attr('class', 'yAxis')
-        
+
 
     svg.append('g')
         .call(axisTop(xScale)).attr('stroke', 'white')
@@ -96,6 +89,56 @@ function LineChart() {
     const lineGenerator = line()
         .x(d => xScale(parseDate(d.date)))
         .y(d => yScale(d.open))
+
+        svg
+        .append('rect')
+        .attr('class', 'overlay')
+        .attr('width', width)
+        .attr('height', height)
+        .on('mouseover', () => focus.style('display', null))
+        .on('mouseout', () => focus.style('display', 'none'))
+
+        .on('mousemove', (e)=>{
+            const bisectDate = bisector(d => parseDate(d.date)).left;
+
+            //returns corresponding value from the domain
+            const correspondingDate = xScale.invert(e.pageX);
+            //gets insertion point
+            const i = bisectDate(data, correspondingDate, 1);
+            const d0 = data[i - 1];
+            const d1 = data[i];
+            const currentPoint = correspondingDate - parseDate(d0['date']) > parseDate(d1['date']) - correspondingDate ? d1 : d0;
+            // console.log(i)
+            // console.log('o', correspondingDate)
+            
+
+            // focus.attr('transform',`translate(${xScale(currentPoint['date'])},     ${yScale(currentPoint['close'])})`);
+            // console.log(xScale(parseDate(currentPoint['date'])))
+            // console.log(currentPoint['date'])
+            // console.log(xScale(parseDate(currentPoint['date'])))
+
+            focus.select('.yLine')
+            // focus.attr('transform',`translate(${xScale(currentPoint['date'])},     ${yScale(currentPoint['close'])})`)
+            
+            .attr('x1', xScale(parseDate(currentPoint['date'])))
+            .attr('x2', xScale(parseDate(currentPoint['date'])))
+
+            focus.select('.xLine')
+            .attr('y1', yScale(currentPoint['close']))
+            .attr('y2', yScale(currentPoint['close']))
+
+            console.log(currentPoint['date'])
+
+            // focus.attr(
+            //     'transform',
+            //     `translate(${xScale(parseDate(currentPoint['date']))}, ${yScale(currentPoint['close'])})`
+            //   );
+           
+
+        })
+
+        
+
 
     // const candle = svg.selectAll('.candles')
     //         .data([data])
@@ -153,7 +196,7 @@ function LineChart() {
             .attr("y1", d => yScale(d.high))
             .attr("y2", d => yScale(d.low))
             .attr("stroke", d => d.open > d.close ? "red" : "green")
-            
+
 
         // svg.append("line")
         //     .attr("y1", 0)
@@ -179,12 +222,12 @@ function LineChart() {
             .style('display', 'none')
             // .style('fill', 'red')
 
-          focus.append('circle').attr('r', 45);
+          focus.append('circle').attr('r', 4.5).style('fill', 'white');
 
 
           focus.append('line')
             .attr("x1", 0)
-            .attr("x2", width -margin.bottom)
+            .attr("x2", width)
             .attr("class", "xLine")
             .style("stroke-width", 2)
             .style("stroke", "white")
@@ -194,55 +237,28 @@ function LineChart() {
 
           focus.append('line')
             .attr("y1", 0)
-            .attr("y2", height - margin.top)
+            .attr("y2", height)
             .attr("class", "yLine")
             .style("stroke-width", 2)
             .style("stroke", "white")
             .style("stroke-dasharray", 4)
             .style("fill", "none")
-        //   .classed('y', true);
+            
+          //   .classed('y', true);
 
-          svg
-            .append('rect')
-            .attr('class', 'overlay')
-            .attr('width', width)
-            .attr('height', height)
-            .on('mouseover', () => focus.style('display', null))
-            .on('mouseout', () => focus.style('display', 'none'))
-          
-            svg.on('mousemove', (e)=>{
-                const bisectDate = bisector(d => d.date).left;
+          select('.overlay').style('fill', 'none');
+          select('.overlay').style('pointer-events', 'all');
 
-                //returns corresponding value from the domain
-                const correspondingDate = xScale.invert(e.pageX);
-                //gets insertion point
-                const i = bisectDate(data, correspondingDate, 1);
-                const d0 = data[i - 1];
-                const d1 = data[i];
-                const currentPoint = correspondingDate - d0['date'] > d1['date'] - correspondingDate ? d1 : d0;
-                         
-                // focus.attr('transform',`translate(${xScale(currentPoint['date'])},     ${yScale(currentPoint['close'])})`);
-                // console.log(xScale(parseDate(currentPoint['date'])))      
-                // console.log(currentPoint['date']) 
-                console.log(currentPoint.date)     
-                
-                select('.yLine')
-                // .attr('transform',`translate(${xScale(currentPoint['date'])},     ${yScale(currentPoint['close'])})`)
-                
-                .attr('x1', xScale(parseDate(currentPoint['date'])))
-                .attr('x2', xScale(parseDate(currentPoint['date'])))
-    
-                select('.xLine')
-                .attr('y1', yScale(currentPoint['close']))
-                .attr('y2', yScale(currentPoint['close']))
-                // console.log(e)
-                
-            })
+         
 
+            // .on('mouseover', () => console.log('over'))
+            // .on('mouseout', () => console.log('out'))
+
+           
         // svg.on('mousemove', (e)=>{
 
         //     select('.yLine')
-            
+
         //     .attr('x1', e.pageX + 10)
         //     .attr('x2', e.pageX + 10)
 
@@ -250,7 +266,7 @@ function LineChart() {
         //     .attr('y1', e.pageY)
         //     .attr('y2', e.pageY)
         //     console.log(e)
-            
+
         // })
 
 
@@ -265,6 +281,14 @@ function LineChart() {
     //     .attr("d", areaGen)
     //     .attr("fill", "green")
 
+    svg.selectAll()
+    .data(volData)
+    .enter()
+    .append('rect')
+    .attr('x', d => xScale(parseDate(d.date)))
+    .attr('y', d => yVolScale(d.volume))
+    .attr('height', d => height - yVolScale(d.volume))
+    .attr('width', 10).style('fill', 'pink')
 
 
 
