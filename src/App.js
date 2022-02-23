@@ -5,22 +5,7 @@ import LineChart from './components/LineChart';
 
 function App() {
   return (
-    <div className='md:flex antialiased'>
-      <aside className='w-full md:w-64 md:flex md:flex-col bg-gray-900'>
-        <header>
-          <h1>Building</h1>
-        </header>
-        <nav>
-          <header>
-            <span>Menu</span>
-          </header>
-          <ul>
-            <li>
-              <button>Peformance</button>
-            </li>
-          </ul>
-        </nav>
-      </aside>
+    <div className='antialiased'>
       <main className='bg-gray-100 h-screen w-full overflow-y-auto'>
         <section>
           <header className='border-b border-gray-300 border-solid bg-white'>

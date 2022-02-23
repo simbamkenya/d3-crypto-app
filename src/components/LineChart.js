@@ -8,6 +8,8 @@ function LineChart() {
     const svgRef = useRef(null)
     // const bisectDate = bisector(d => d.date).left;
 
+    const [candle, setCandle] = useState([])
+
     console.log(data[0])
 
     useEffect(() => {
@@ -110,6 +112,7 @@ function LineChart() {
             const currentPoint = correspondingDate - parseDate(d0['date']) > parseDate(d1['date']) - correspondingDate ? d1 : d0;
             // console.log(i)
             // console.log('o', correspondingDate)
+            setCandle(currentPoint)
             
 
             // focus.attr('transform',`translate(${xScale(currentPoint['date'])},     ${yScale(currentPoint['close'])})`);
@@ -127,8 +130,9 @@ function LineChart() {
             .attr('y1', yScale(currentPoint['close']))
             .attr('y2', yScale(currentPoint['close']))
 
-            console.log(currentPoint['date'])
 
+            // svg.append('circle').attr('r', 30).style('fill', "gray")
+           
             // focus.attr(
             //     'transform',
             //     `translate(${xScale(parseDate(currentPoint['date']))}, ${yScale(currentPoint['close'])})`
@@ -288,8 +292,7 @@ function LineChart() {
     .attr('x', d => xScale(parseDate(d.date)))
     .attr('y', d => yVolScale(d.volume))
     .attr('height', d => height - yVolScale(d.volume))
-    .attr('width', 10).style('fill', 'pink')
-
+    .attr('width', 10).style('fill', 'gray')
 
 
     }, [data])
