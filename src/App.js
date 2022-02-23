@@ -29,7 +29,7 @@ function App() {
                 <div className='p-4 w-full sm:w-1/2 lg:w-1/4 border-b border-solid bg-gray-300 sm:border-r md:border-b-0'>
                   <span className='text-xs font-medium text-gray-500 uppercase'>Low</span>
                   <div className='py-4 flex items-center justify-center text-center'>
-                    <span className='text-3xl'>{candle.low ? candle.low.toFixed(2) : 'not defined'}</span>
+                    <span className='text-3xl'>{candle.low ? candle.low.toFixed(2) : ''}</span>
                     {/* <span className='inline-flex items-center bg-green-500 h-6 px-2 rounded text-white text-xs'>+12.0%</span> */}
                   </div>
                 </div>
