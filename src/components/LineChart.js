@@ -31,7 +31,7 @@ function LineChart({setCandle, candle}) {
 
 
     //dimensions
-    const margin = { top: 20, right: 20, bottom: 50, left: 30 },
+    const margin = { top: 30, right: 20, bottom: 50, left: 30 },
         width = 960 - margin.left - margin.right,
         height = 640 - margin.top - margin.bottom;
 
@@ -71,22 +71,26 @@ function LineChart({setCandle, candle}) {
     svg.append('g')
         .attr('transform', `translate(0, ${height})`)
         .call(axisBottom(xScale))
-        .attr('stroke', 'white')
+        .attr('stroke', 'white').style("font-size",'0.875rem')
         .attr('class', 'xAxis')
+        .attr('class', 'font-monts')
 
     svg.append('g')
-        .call(axisLeft(yScale)).attr('stroke', 'white')
+        .call(axisLeft(yScale)).attr('stroke', 'white').style("font-size",'0.875rem')
         .attr('class', 'yAxis')
+        .attr('class', 'font-monts')
 
 
     svg.append('g')
-        .call(axisTop(xScale)).attr('stroke', 'white')
+        .call(axisTop(xScale)).attr('stroke', 'white').style("font-size",'0.875rem')
         .attr('class', 'xAxis')
+        .attr('class', 'font-monts')
 
     svg.append('g')
         .attr('transform', `translate(${width}, 0)`)
-        .call(axisRight(yScale)).attr('stroke', 'white')
+        .call(axisRight(yScale)).attr('stroke', 'white').style("font-size",'0.875rem')
         .attr('class', 'yAxis')
+        .attr('class', 'font-monts')
 
     //line
     const lineGenerator = line()
