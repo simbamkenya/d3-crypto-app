@@ -2,10 +2,11 @@ import React, { useState, useEffect, useRef, useContext } from 'react';
 import { CryptoContext } from '../CryptoContext';
 import { select, bisector, csv, area, curveCardinal, curveMonotoneX, timeParse, scaleTime, scaleLinear, max, min, extent, line, axisBottom, axisLeft, axisTop, axisRight  }  from 'd3';
 
-function LineChart({setCandle}) {
+function LineChart({setCandle, candle}) {
     // const url = 'https://raw.githubusercontent.com/holtzy/data_to_viz/master/Example_dataset/3_TwoNumOrdered_comma.csv'
     const data = useContext(CryptoContext)
     const svgRef = useRef(null)
+    const container = useRef(null)
     // const bisectDate = bisector(d => d.date).left;
 
    
@@ -129,9 +130,19 @@ function LineChart({setCandle}) {
             focus.select('.xLine')
             .attr('y1', yScale(currentPoint['close']))
             .attr('y2', yScale(currentPoint['close']))
+            
+            // focus.append("rect")
+            // .attr("width", 20)
+            // .attr("y", height/2)
+            // .attr("x", width/2)
+            // .attr("height", 20).style('fill', 'red').style('display',null)
 
-
-            // svg.append('circle').attr('r', 30).style('fill', "gray")
+            // focus.append("text")
+            // .attr("x", -width)
+            // .attr("y", height/2)
+            // .attr("dy", ".35em")
+            // .text(d => currentPoint['low']).style('fill', 'green')
+            // // svg.append('circle').attr('r', 30).style('fill', "gray")
            
             // focus.attr(
             //     'transform',
@@ -297,7 +308,16 @@ function LineChart({setCandle}) {
 
     }, [data])
   return (
-    <svg ref={svgRef} viewBox="0 0 800 800" id='container'></svg>
+      <div className='relative' ref={container}>
+          <div className='absolute h-auto w-24 bg-gray-700 text-white text-lg flex flex-col p-2 ml-1 rounded' id='tooltip'>
+              <span className='flex'>Open: {candle.open.toFixed(2)}</span>
+              <span>Close: {candle.close.toFixed(2)}</span>
+              <span>High: {candle.high.toFixed(2)}</span>
+              <span>Low: {candle.low.toFixed(2)}</span>
+            </div>
+          <svg ref={svgRef} viewBox="0 0 800 800" id='container'></svg>
+      </div>
+    
   );
 }
 
