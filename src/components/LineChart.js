@@ -3,20 +3,14 @@ import { CryptoContext } from '../CryptoContext';
 import { select, bisector, csv, area, curveCardinal, curveMonotoneX, timeParse, scaleTime, scaleLinear, max, min, extent, line, axisBottom, axisLeft, axisTop, axisRight  }  from 'd3';
 
 function LineChart({setCandle, candle}) {
-    // const url = 'https://raw.githubusercontent.com/holtzy/data_to_viz/master/Example_dataset/3_TwoNumOrdered_comma.csv'
+   
     const data = useContext(CryptoContext)
     const svgRef = useRef(null)
     const container = useRef(null)
-    // const bisectDate = bisector(d => d.date).left;
-
    
-
-    console.log(data[0])
 
     useEffect(() => {
     const parseDate = timeParse("%Y-%m-%d")
-
-
 
     //accessor functions
     const xAccessor = d => parseDate(d.date)
@@ -76,6 +70,7 @@ function LineChart({setCandle, candle}) {
         .attr('class', 'font-monts')
 
     svg.append('g')
+    
         .call(axisLeft(yScale)).attr('stroke', 'white').style("font-size",'0.875rem')
         .attr('class', 'yAxis')
         .attr('class', 'font-monts')
@@ -120,82 +115,15 @@ function LineChart({setCandle, candle}) {
             setCandle(currentPoint)
             
 
-            // focus.attr('transform',`translate(${xScale(currentPoint['date'])},     ${yScale(currentPoint['close'])})`);
-            // console.log(xScale(parseDate(currentPoint['date'])))
-            // console.log(currentPoint['date'])
-            // console.log(xScale(parseDate(currentPoint['date'])))
-
-            focus.select('.yLine')
-            // focus.attr('transform',`translate(${xScale(currentPoint['date'])},     ${yScale(currentPoint['close'])})`)
-            
+            focus.select('.yLine')          
             .attr('x1', xScale(parseDate(currentPoint['date'])))
             .attr('x2', xScale(parseDate(currentPoint['date'])))
 
             focus.select('.xLine')
             .attr('y1', yScale(currentPoint['close']))
-            .attr('y2', yScale(currentPoint['close']))
-            
-            // focus.append("rect")
-            // .attr("width", 20)
-            // .attr("y", height/2)
-            // .attr("x", width/2)
-            // .attr("height", 20).style('fill', 'red').style('display',null)
-
-            // focus.append("text")
-            // .attr("x", -width)
-            // .attr("y", height/2)
-            // .attr("dy", ".35em")
-            // .text(d => currentPoint['low']).style('fill', 'green')
-            // // svg.append('circle').attr('r', 30).style('fill', "gray")
-           
-            // focus.attr(
-            //     'transform',
-            //     `translate(${xScale(parseDate(currentPoint['date']))}, ${yScale(currentPoint['close'])})`
-            //   );
-           
+            .attr('y2', yScale(currentPoint['close']))                      
 
         })
-
-        
-
-
-    // const candle = svg.selectAll('.candles')
-    //         .data([data])
-    //         .enter()
-    //         .append('g')
-    //         .attr('class', 'candles')
-
-
-
-    // candle.append('path')
-    //     .data([data])
-    //     .attr('class', 'line')
-    //     .attr('fill', 'none')
-    //     .attr('stroke', 'steelblue')
-    //     .attr('stroke-width', 1.5)
-    //     .attr('d', lineGenerator)
-
-
-        // svg.selectAll("line.x")
-        // .data(xScale.ticks(10))
-        // .enter().append("line")
-        // .attr("class", "x")
-        // .attr("x1", xScale)
-        // .attr("x2", xScale)
-        // .attr("y1", margin.top)
-        // .attr("y2", height - margin.bottom)
-        // .attr("stroke", "#ccc");
-
-        // svg.selectAll("line.y")
-        //    .data(yScale.ticks(10))
-        //    .enter().append("line")
-        //    .attr("class", "y")
-        //    .attr("x1", margin.left)
-        //    .attr("x2", width - margin.left)
-        //    .attr("y1", yScale)
-        //    .attr("y2", yScale)
-        //    .attr("stroke", "#ccc");
-
 
         svg.selectAll("rect")
            .data(data)
@@ -216,30 +144,11 @@ function LineChart({setCandle, candle}) {
             .attr("y2", d => yScale(d.low))
             .attr("stroke", d => d.open > d.close ? "red" : "green")
 
-
-        // svg.append("line")
-        //     .attr("y1", 0)
-        //     .attr("y2", height - margin.top)
-        //     .attr("class", "yLine")
-        //     .style("stroke-width", 2)
-        //     .style("stroke", "white")
-        //     .style("stroke-dasharray", 4)
-        //     .style("fill", "none");
-
-        // svg.append("line")
-        //     .attr("x1", 0)
-        //     .attr("x2", width -margin.bottom)
-        //     .attr("class", "xLine")
-        //     .style("stroke-width", 2)
-        //     .style("stroke", "white")
-        //     .style("stroke-dasharray", 4)
-        //     .style("fill", "none");
-
         const focus = svg
             .append('g')
             .attr('class', 'focus')
             .style('display', 'none')
-            // .style('fill', 'red')
+            
 
           focus.append('circle').attr('r', 4.5).style('fill', 'white');
 
@@ -268,46 +177,16 @@ function LineChart({setCandle, candle}) {
           select('.overlay').style('fill', 'none');
           select('.overlay').style('pointer-events', 'all');
 
-         
+        
 
-            // .on('mouseover', () => console.log('over'))
-            // .on('mouseout', () => console.log('out'))
-
-           
-        // svg.on('mousemove', (e)=>{
-
-        //     select('.yLine')
-
-        //     .attr('x1', e.pageX + 10)
-        //     .attr('x2', e.pageX + 10)
-
-        //     select('.xLine')
-        //     .attr('y1', e.pageY)
-        //     .attr('y2', e.pageY)
-        //     console.log(e)
-
-        // })
-
-
-
-    //  const areaGen =  area()
-    //     .x((d) => xScale(d.date))
-    //     .y0(yScale(min(data, yAccessor)))
-    //     .y1((d) => yScale(d.open))
-
-    // svg.append('path')
-    //     .datum(data)
-    //     .attr("d", areaGen)
-    //     .attr("fill", "green")
-
-    svg.selectAll()
-    .data(volData)
-    .enter()
-    .append('rect')
-    .attr('x', d => xScale(parseDate(d.date)))
-    .attr('y', d => yVolScale(d.volume))
-    .attr('height', d => height - yVolScale(d.volume))
-    .attr('width', 10).style('fill', 'gray')
+        svg.selectAll()
+        .data(volData)
+        .enter()
+        .append('rect')
+        .attr('x', d => xScale(parseDate(d.date)))
+        .attr('y', d => yVolScale(d.volume))
+        .attr('height', d => height - yVolScale(d.volume))
+        .attr('width', 10).style('fill', 'gray')
 
 
     }, [data])
